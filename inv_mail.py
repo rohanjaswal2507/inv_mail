@@ -1,5 +1,5 @@
 import smtplib, getpass
-import email, openpyxl, sys
+import email, sys
 import email.mime.application
 
 pb = 'Placement Brochure.pdf'
@@ -44,22 +44,21 @@ msg.attach(att)
 
 ## Get all the emails from text file or excelsheet
 if len(sys.argv) < 2:
-    print('Please provide the name of the excelsheet containing the e-mail IDs')
+    print('Please provide the name of the file containing the e-mail IDs')
     exit()
 else:
-    wb_name = sys.argv[1]
-    wb = openpyxl.load_workbook(wb_name)
-    sheet = wb.active
+    email_file_name = sys.argv[1]
+
+email_file = open(email_file_name, 'rb')
+emails = email_file.readlines()
 
 
-n = int(raw_input('Enter the total number of e-mail IDs in the list:'))
-print('The email IDs in your list are:')
-for i in range(2, n+2):
-    print(sheet['B' + str(i)].value)
-
+print('The emails in the list are:')
+for email_id in emails:
+    print(email_id)
 confirmation = raw_input('Is that okay? (y/n)')
 if confirmation == 'n':
-    print('Please run the program with correct number of email addresses')
+    print('Please run the program with correct number email addresses')
     exit()
 
 print(' ')
@@ -81,9 +80,9 @@ while not_logged_in:
 
 
 ## send e-mails to all in the excel sheet
-for i in range (2, n+2):
+for email_id in emails:
 
-    receiver = sheet['B' + str(i)].value
+    receiver = email_id
     msg['From'] = sender
     msg['To'] = receiver
     body = email.mime.Text.MIMEText(msg_text, 'html')
