@@ -69,14 +69,12 @@ mailer.starttls()
 password = getpass.getpass('Enter Password for ' + sender + ':')
 not_logged_in = True
 
-while not_logged_in:
-    try:
-        mailer.login(sender, password)
-        not_logged_in = False
-        print('Successfully logged in.')
-        print('Now, sit back and relax. Your internet connection is slow. I will send all the e-mails')
-    except Exception:
-        password = getpass.getpass('Bro, please enter the password again: ')
+
+mailer.login(sender, password)
+not_logged_in = False
+print('Successfully logged in.')
+print('Now, sit back and relax. Your internet connection is slow. I will send all the e-mails')
+
 
 
 ## send e-mails to all in the excel sheet
