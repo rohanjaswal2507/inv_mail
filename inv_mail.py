@@ -10,36 +10,6 @@ sender = 'rohanjaswal2507@gmail.com'
 
 ## E-mail content
 
-msg = email.mime.Multipart.MIMEMultipart()
-msg['Subject'] = 'Invitation for Campus Placement recruitment of B.Tech./B.Arch./M.Tech./M.Arch. 2017 batch students at NIT Hamirpur (HP)'
-
-html_content = open('try.html', 'rb')
-msg_text = html_content.read()
-
-
-#attach inv_letter
-filename=inv_letter
-fp=open(filename,'rb')
-att = email.mime.application.MIMEApplication(fp.read(),_subtype="doc")
-fp.close()
-att.add_header('Content-Disposition','attachment',filename=filename)
-msg.attach(att)
-
-#attach JNF
-filename=jnf
-fp=open(filename,'rb')
-att = email.mime.application.MIMEApplication(fp.read(),_subtype="doc")
-fp.close()
-att.add_header('Content-Disposition','attachment',filename=filename)
-msg.attach(att)
-
-#attach placement brochure
-filename=pb
-fp=open(filename,'rb')
-att = email.mime.application.MIMEApplication(fp.read(),_subtype="pdf")
-fp.close()
-att.add_header('Content-Disposition','attachment',filename=filename)
-msg.attach(att)
 
 
 ## Get all the emails from text file or excelsheet
@@ -49,13 +19,13 @@ if len(sys.argv) < 2:
 else:
     email_file_name = sys.argv[1]
 
-email_file = open(email_file_name, 'rb')
+email_file = open(email_file_name, 'r')
 emails = email_file.readlines()
 
 
 print('The emails in the list are:')
 for email_id in emails:
-    print(email_id)
+    print(email_id.rstrip())
 confirmation = raw_input('Is that okay? (y/n)')
 if confirmation == 'n':
     print('Please run the program with correct number email addresses')
@@ -80,7 +50,39 @@ print('Now, sit back and relax. Your internet connection is slow. I will send al
 ## send e-mails to all in the excel sheet
 for email_id in emails:
 
-    receiver = email_id
+    receiver = email_id.rstrip()
+
+    msg = email.mime.Multipart.MIMEMultipart()
+    msg['Subject'] = 'Invitation for Campus Placement recruitment of B.Tech./B.Arch./M.Tech./M.Arch. 2017 batch students at NIT Hamirpur (HP)'
+
+    html_content = open('try.html', 'rb')
+    msg_text = html_content.read()
+
+
+    #attach inv_letter
+    filename=inv_letter
+    fp=open(filename,'rb')
+    att = email.mime.application.MIMEApplication(fp.read(),_subtype="doc")
+    fp.close()
+    att.add_header('Content-Disposition','attachment',filename=filename)
+    msg.attach(att)
+
+    #attach JNF
+    filename=jnf
+    fp=open(filename,'rb')
+    att = email.mime.application.MIMEApplication(fp.read(),_subtype="doc")
+    fp.close()
+    att.add_header('Content-Disposition','attachment',filename=filename)
+    msg.attach(att)
+
+    #attach placement brochure
+    filename=pb
+    fp=open(filename,'rb')
+    att = email.mime.application.MIMEApplication(fp.read(),_subtype="pdf")
+    fp.close()
+    att.add_header('Content-Disposition','attachment',filename=filename)
+    msg.attach(att)
+
     msg['From'] = sender
     msg['To'] = receiver
     body = email.mime.Text.MIMEText(msg_text, 'html')
