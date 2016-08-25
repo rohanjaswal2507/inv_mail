@@ -6,10 +6,7 @@ pb = 'Placement Brochure.pdf'
 jnf = 'Job Notification Form - NIT Hamirpur.doc'
 inv_letter = 'Invitation Letter.doc'
 
-sender = 'rohanjaswal2507@gmail.com'
-
-## E-mail content
-
+sender = 'tponith@gmail.com'
 
 
 ## Get all the emails from text file or excelsheet
@@ -22,16 +19,17 @@ else:
 email_file = open(email_file_name, 'r')
 emails = email_file.readlines()
 
-
 print('The emails in the list are:')
 for email_id in emails:
     print(email_id.rstrip())
+
 confirmation = raw_input('Is that okay? (y/n)')
 if confirmation == 'n':
     print('Please run the program with correct number email addresses')
     exit()
 
 print(' ')
+
 ## SMTP action
 mailer = smtplib.SMTP('smtp.gmail.com', 587)
 mailer.ehlo()
@@ -46,18 +44,17 @@ print('Successfully logged in.')
 print('Now, sit back and relax. Your internet connection is slow. I will send all the e-mails')
 
 
-
 ## send e-mails to all in the excel sheet
 for email_id in emails:
 
     receiver = email_id.rstrip()
 
+    ## E-mail content
     msg = email.mime.Multipart.MIMEMultipart()
     msg['Subject'] = 'Invitation for Campus Placement recruitment of B.Tech./B.Arch./M.Tech./M.Arch. 2017 batch students at NIT Hamirpur (HP)'
 
     html_content = open('try.html', 'rb')
     msg_text = html_content.read()
-
 
     #attach inv_letter
     filename=inv_letter
