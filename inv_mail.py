@@ -1,12 +1,14 @@
 import smtplib, getpass
-import email, sys
+import email, sys, datetime
 import email.mime.application
 
 pb = 'Placement Brochure.pdf'
 jnf = 'Job Notification Form - NIT Hamirpur.doc'
 inv_letter = 'Invitation Letter.doc'
 
-sender = 'tponith@gmail.com'
+log_file = open('emails.log', 'a')
+
+sender = 'rohanjaswal2507@gmail.com'
 
 
 ## Get all the emails from text file or excelsheet
@@ -88,9 +90,10 @@ for email_id in emails:
     try:
         mailer.sendmail(sender, receiver, msg.as_string())
         print('Mail successfully sent to ' + receiver)
-
+        log_file.write(receiver + '    ' + format(datetime.datetime.now()) + '\n')
     except Exception:
         print("Could not send mail to " + receiver)
 
 
 mailer.quit()
+log_file.close()
