@@ -74,7 +74,7 @@ msg.attach(body)
 try:
     mailer.sendmail(sender, receiver, msg.as_string())
     print('Mail successfully sent to ' + receiver)
-    log_file.write('\n' + receiver + '      ' + format(datetime.datetime.now()) + '\n')
+    log_file.write(receiver + '      ' + format(datetime.datetime.now()) + '\n')
 except Exception:
     print("Could not send mail to " + receiver)
 
