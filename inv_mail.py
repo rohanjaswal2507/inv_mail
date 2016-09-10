@@ -1,6 +1,7 @@
 import smtplib, getpass
 import email, sys, datetime
 import email.mime.application
+import os
 
 pb = 'Placement Brochure.pdf'
 jnf = 'Job Notification Form - NIT Hamirpur.doc'
@@ -97,3 +98,7 @@ for email_id in emails:
 
 mailer.quit()
 log_file.close()
+email_file.close()
+
+#move email file to email_files directory
+os.rename(email_file_name, 'email_files/'+email_file_name)
